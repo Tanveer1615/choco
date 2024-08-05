@@ -32,8 +32,10 @@ export async function POST(request: Request) {
     return Response.json({ message: err }, { status: 400 });
   }
 
-  const inputImage = isServer?  (validatedData.image as File): (validatedData.image as FileList)[0];
-  const filename = `${Date.now()}.${inputImage.name.split(".").slice(-1)}`; // choco.png 213123123123.png
+  const inputImage = isServer
+    ? (validatedData.image as File)
+    : (validatedData.image as FileList)[0];
+  const filename = `${Date.now()}.${inputImage?.name.split(".").slice(-1)}`; // choco.png 213123123123.png
 
   try {
     const buffer = Buffer.from(await inputImage.arrayBuffer());
