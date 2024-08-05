@@ -4,6 +4,7 @@ import path from "node:path";
 import { db } from "@/lib/db/db";
 import { products } from "@/lib/db/schema";
 import { desc } from "drizzle-orm";
+
 export async function POST(request: Request) {
   //   const session = await getServerSession(authOptions);
 
@@ -31,10 +32,9 @@ export async function POST(request: Request) {
     return Response.json({ message: err }, { status: 400 });
   }
 
-  const inputImage = validatedData.image;
-  //   isServer
-  //     ? (validatedData.image as File)
-  //     : (validatedData.image as FileList)[0];
+  const inputImage = isServer
+    ? (validatedData.image as File)
+    : (validatedData.image as FileList)[0];
   const filename = `${Date.now()}.${inputImage.name.split(".").slice(-1)}`; // choco.png 213123123123.png
 
   try {
